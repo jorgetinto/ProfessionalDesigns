@@ -1,3 +1,4 @@
+import 'package:custom_painter/src/models/layout_model.dart';
 import 'package:custom_painter/src/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -6,20 +7,42 @@ import 'package:custom_painter/src/routes/routes.dart';
 import 'package:provider/provider.dart';
 
 
-class LaucherPage extends StatelessWidget {
+class LaucherTabletPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
 
-    final appTheme  = Provider.of<ThemeChanger>(context).currentTheme;
+    final appTheme  = Provider.of<ThemeChanger>(context);
+    final layoutmodel = Provider.of<LayoutModel>(context);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Diseño en Flutter - telefono'),
-        backgroundColor: appTheme.accentColor,
+        title: Text('Diseño en Flutter - Tablet'),
+        backgroundColor: appTheme.currentTheme.accentColor,
       ),
       drawer: _MenuPrincipal(),
-      body: _ListOpciones(),
+      body: Row(
+        children: [
+
+          Container(
+            width: 300,
+            height: double.infinity,
+            child: _ListOpciones(),
+          ),
+
+          Container(
+            width: 5,
+            height: double.infinity,
+            color: (appTheme.darkTheme) ? Colors.grey : appTheme.currentTheme.accentColor,
+          ),
+
+          Expanded(
+            child: layoutmodel.currentPage
+          )
+
+        ],
+      ),
+      //body: _ListOpciones(),
     );
   }
 }
@@ -43,7 +66,9 @@ class _ListOpciones extends StatelessWidget {
         title: Text(pageRoutes[i].titulo),
         trailing: Icon(Icons.chevron_right, color: appTheme.accentColor),
         onTap: () {
-          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => pageRoutes[i].page));
+          //Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => pageRoutes[i].page));
+          final layoutmodel = Provider.of<LayoutModel>(context, listen: false);
+          layoutmodel.currentPage = pageRoutes[i].page;
         },
       ), 
        

@@ -22,6 +22,14 @@ class EmergencyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    bool isLarge;
+
+    if (MediaQuery.of(context).size.height > 550) {
+      isLarge = true;
+    } else {
+      isLarge = false;
+    }
+
     final items = <ItemBoton>[
       new ItemBoton( FontAwesomeIcons.carCrash, 'Motor Accident', Color(0xff6989F5), Color(0xff906EF5) ),
       new ItemBoton( FontAwesomeIcons.plus, 'Medical Emergency', Color(0xff66A9F2), Color(0xff536CF6) ),
@@ -38,7 +46,7 @@ class EmergencyPage extends StatelessWidget {
     ];
 
     List<Widget> itemMap = items.map( (item) => FadeInLeft(
-                                          duration: Duration(milliseconds: 250),
+                                          duration: Duration(milliseconds: 220),
                                           child: BotonGordo(
                                             icon: item.icon,
                                             texto: item.texto,
@@ -52,16 +60,21 @@ class EmergencyPage extends StatelessWidget {
         children: <Widget>[
 
           Container(
-            margin: EdgeInsets.only(top: 150),
-            child: ListView(
-              physics: BouncingScrollPhysics(),
-              children: <Widget>[
-                SizedBox(height: 80,),
-                ...itemMap                
-              ],
+            margin: EdgeInsets.only(top: (isLarge) ? 170 : 10),
+            child: SafeArea(
+              child: ListView(
+                physics: BouncingScrollPhysics(),
+                children: <Widget>[
+                  if (isLarge)
+                    SizedBox(height: 80,),
+                    
+                  ...itemMap                
+                ],
+              ),
             ),
           ),
 
+        if (isLarge)
           _Encabezado(),
 
         ],
