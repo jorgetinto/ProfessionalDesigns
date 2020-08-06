@@ -1,23 +1,28 @@
-// import 'package:custom_painter/src/pages/animaciones_page.dart';
-// import 'package:custom_painter/src/labs/circular_progress_page.dart';
-// import 'package:custom_painter/src/pages/graficas_circulares_page.dart';
-// import 'package:custom_painter/src/pages/slideshow_page.dart';
-// import 'package:custom_painter/src/reto/cuadrado_animado_page.dart';
-// import 'package:custom_painter/src/pages/headers_page.dart';
-// import 'package:custom_painter/src/pages/pinterest_page.dart';
-// import 'package:custom_painter/src/pages/amergency_page.dart';
-import 'package:custom_painter/src/pages/slider_list_page.dart';
+import 'package:custom_painter/src/theme/theme.dart';
 import 'package:flutter/material.dart';
+
+import 'package:custom_painter/src/pages/laucher_page.dart';
+import 'package:provider/provider.dart';
+
  
-void main() => runApp(MyApp());
+void main() => runApp(
+  ChangeNotifierProvider(
+    create: (_) => new ThemeChanger(1),
+    child: MyApp()
+  )
+);
  
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
+    final currentTheme = Provider.of<ThemeChanger>(context).currentTheme;
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: currentTheme,
       title: 'Diseños App',
-      home: SliverListPage()
+      home: LaucherPage()
     );
   }
 }
